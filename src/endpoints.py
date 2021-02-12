@@ -10,6 +10,7 @@ import oandapyV20.endpoints.trades as trades
 import oandapyV20.endpoints.positions as positions
 import oandapyV20.endpoints.transactions as transactions
 import oandapyV20.endpoints.pricing as pricing
+import oandapyV20.endpoints.forexlabs as labs
 from exampleauth import exampleAuth
 
 
@@ -116,6 +117,69 @@ def print_pricing(api: oandapyV20.API, acc: str):
     print(json.dumps(rv, indent=2))
 
 
+# forexlabs
+def print_autochartist(api: oandapyV20.API):
+    param = {
+        'instrument': 'XAU_USD'
+    }
+    r = labs.Autochartist(params=param)
+    rv = api.request(r)
+    print(json.dumps(rv, indent=2))
+
+
+def print_calendar(api: oandapyV20.API):
+    param = {
+        'instrument': 'XAU_USD',
+        "period": 86400
+    }
+    r = labs.Calendar(params=param)
+    rv = api.request(r)
+    print(json.dumps(rv, indent=2))
+
+
+def print_commitments_traders(api: oandapyV20.API):
+    param = {
+        'instrument': 'XAU_USD'
+    }
+    r = labs.CommitmentsOfTraders(params=param)
+    rv = api.request(r)
+    print(json.dumps(rv, indent=2))
+
+
+def print_historical_position_ratios(api: oandapyV20.API):
+    # The v1 historical_position_ratios endpoint has been disabled.
+    # Please use the v20-REST API to derive the position ratio values
+    param = {
+        'instrument': 'XAU_USD',
+        "period": 86400
+    }
+    r = labs.HistoricalPositionRatios(params=param)
+    rv = api.request(r)
+    print(json.dumps(rv, indent=2))
+
+
+def print_orderbook_data(api: oandapyV20.API):
+    # The v1 orderbook_data endpoint has been disabled.
+    # It has been replaced by the orderBook and positionBook endpoints in the v20-REST API.
+    param = {
+        'instrument': 'XAU_USD',
+        "period": 3600
+    }
+    r = labs.OrderbookData(params=param)
+    rv = api.request(r)
+    print(json.dumps(rv, indent=2))
+
+
+def print_spreads(api: oandapyV20.API):
+    param = {
+        'instrument': 'XAU_USD',
+        "period": 57600
+    }
+    r = labs.Spreads(params=param)
+    rv = api.request(r)
+    print(json.dumps(rv, indent=2))
+
+
 def main():
     accountID, token = exampleAuth()
     client = oandapyV20.API(access_token=token)
@@ -147,7 +211,15 @@ def main():
     # print_transactions(client, accountID)
 
     # pricing
-    print_pricing(client, accountID)
+    # print_pricing(client, accountID)
+
+    # forexlab
+    # print_autochartist(client)
+    # print_calendar(client)
+    # print_commitments_traders(client)
+    # print_historical_position_ratios(client)
+    # print_orderbook_data(client)
+    print_spreads(client)
 
 
 if __name__ == '__main__':
