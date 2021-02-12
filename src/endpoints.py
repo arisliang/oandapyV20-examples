@@ -5,6 +5,11 @@ import json
 import oandapyV20
 import oandapyV20.endpoints.accounts as accounts
 import oandapyV20.endpoints.instruments as instruments
+import oandapyV20.endpoints.orders as orders
+import oandapyV20.endpoints.trades as trades
+import oandapyV20.endpoints.positions as positions
+import oandapyV20.endpoints.transactions as transactions
+import oandapyV20.endpoints.pricing as pricing
 from exampleauth import exampleAuth
 
 
@@ -55,6 +60,62 @@ def print_positionbook(api: oandapyV20.API):
     print(json.dumps(rv, indent=2))
 
 
+# order
+def print_orders(api: oandapyV20.API, acc: str):
+    r = orders.OrderList(accountID=acc)
+    rv = api.request(r)
+    print(json.dumps(rv, indent=2))
+
+
+def print_pending_orders(api: oandapyV20.API, acc: str):
+    r = orders.OrdersPending(accountID=acc)
+    rv = api.request(r)
+    print(json.dumps(rv, indent=2))
+
+
+# trade
+def print_trades(api: oandapyV20.API, acc: str):
+    r = trades.TradesList(accountID=acc)
+    rv = api.request(r)
+    print(json.dumps(rv, indent=2))
+
+
+def print_opentrades(api: oandapyV20.API, acc: str):
+    r = trades.OpenTrades(accountID=acc)
+    rv = api.request(r)
+    print(json.dumps(rv, indent=2))
+
+
+# positions
+def print_positions(api: oandapyV20.API, acc: str):
+    r = positions.PositionList(accountID=acc)
+    rv = api.request(r)
+    print(json.dumps(rv, indent=2))
+
+
+def print_open_positions(api: oandapyV20.API, acc: str):
+    r = positions.OpenPositions(accountID=acc)
+    rv = api.request(r)
+    print(json.dumps(rv, indent=2))
+
+
+# transactions
+def print_transactions(api: oandapyV20.API, acc: str):
+    r = transactions.TransactionList(accountID=acc)
+    rv = api.request(r)
+    print(json.dumps(rv, indent=2))
+
+
+# pricing
+def print_pricing(api: oandapyV20.API, acc: str):
+    param = {
+        'instruments': 'XAU_USD'
+    }
+    r = pricing.PricingInfo(accountID=acc, params=param)
+    rv = api.request(r)
+    print(json.dumps(rv, indent=2))
+
+
 def main():
     accountID, token = exampleAuth()
     client = oandapyV20.API(access_token=token)
@@ -68,7 +129,25 @@ def main():
     # instrument
     # print_candles(client)
     # print_orderbook(client)
-    print_positionbook(client)
+    # print_positionbook(client)
+
+    # order
+    # print_orders(client, accountID)
+    # print_pending_orders(client, accountID)
+
+    # trade
+    # print_trades(client, accountID)
+    # print_opentrades(client, accountID)
+
+    # position
+    # print_positions(client, accountID)
+    # print_open_positions(client, accountID)
+
+    # transaction
+    # print_transactions(client, accountID)
+
+    # pricing
+    print_pricing(client, accountID)
 
 
 if __name__ == '__main__':
