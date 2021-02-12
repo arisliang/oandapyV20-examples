@@ -16,7 +16,10 @@ from exampleauth import exampleAuth
 
 # account
 def print_instruments(api: oandapyV20.API, acc: str):
-    r = accounts.AccountInstruments(accountID=acc)
+    param = {
+        'instruments': 'XAU_USD,EUR_USD'
+    }
+    r = accounts.AccountInstruments(accountID=acc, params=param)
     rv = api.request(r)
     print(json.dumps(rv, indent=2))
 
@@ -42,6 +45,7 @@ def print_accounts(api: oandapyV20.API):
 # instrument
 def print_candles(api: oandapyV20.API):
     param = {
+        'granularity': 'M1',
         'count': 6
     }
     r = instruments.InstrumentsCandles('XAU_USD', params=param)
@@ -191,7 +195,7 @@ def main():
     # print_accounts(client)
 
     # instrument
-    # print_candles(client)
+    print_candles(client)
     # print_orderbook(client)
     # print_positionbook(client)
 
@@ -219,7 +223,7 @@ def main():
     # print_commitments_traders(client)
     # print_historical_position_ratios(client)
     # print_orderbook_data(client)
-    print_spreads(client)
+    # print_spreads(client)
 
 
 if __name__ == '__main__':
