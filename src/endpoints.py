@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """retrieve the tradable instruments for account."""
 
+import sys
 import json
 import oandapyV20
 import oandapyV20.endpoints.accounts as accounts
@@ -16,6 +17,8 @@ from exampleauth import exampleAuth
 
 # account
 def print_instruments(api: oandapyV20.API, acc: str):
+    print(sys._getframe().f_code.co_name)
+
     param = {
         'instruments': 'XAU_USD,EUR_USD'
     }
@@ -25,18 +28,24 @@ def print_instruments(api: oandapyV20.API, acc: str):
 
 
 def print_summary(api: oandapyV20.API, acc: str):
+    print(sys._getframe().f_code.co_name)
+
     r = accounts.AccountSummary(accountID=acc)
     rv = api.request(r)
     print(json.dumps(rv, indent=2))
 
 
 def print_details(api: oandapyV20.API, acc: str):
+    print(sys._getframe().f_code.co_name)
+
     r = accounts.AccountDetails(accountID=acc)
     rv = api.request(r)
     print(json.dumps(rv, indent=2))
 
 
 def print_accounts(api: oandapyV20.API):
+    print(sys._getframe().f_code.co_name)
+
     r = accounts.AccountList()
     rv = api.request(r)
     print(json.dumps(rv, indent=2))
@@ -44,6 +53,8 @@ def print_accounts(api: oandapyV20.API):
 
 # instrument
 def print_candles(api: oandapyV20.API):
+    print(sys._getframe().f_code.co_name)
+
     param = {
         'granularity': 'M1',
         'count': 6
@@ -54,12 +65,16 @@ def print_candles(api: oandapyV20.API):
 
 
 def print_orderbook(api: oandapyV20.API):
+    print(sys._getframe().f_code.co_name)
+
     r = instruments.InstrumentsOrderBook('XAU_USD')
     rv = api.request(r)
     print(json.dumps(rv, indent=2))
 
 
 def print_positionbook(api: oandapyV20.API):
+    print(sys._getframe().f_code.co_name)
+
     r = instruments.InstrumentsPositionBook('XAU_USD')
     rv = api.request(r)
     print(json.dumps(rv, indent=2))
@@ -67,12 +82,16 @@ def print_positionbook(api: oandapyV20.API):
 
 # order
 def print_orders(api: oandapyV20.API, acc: str):
+    print(sys._getframe().f_code.co_name)
+
     r = orders.OrderList(accountID=acc)
     rv = api.request(r)
     print(json.dumps(rv, indent=2))
 
 
 def print_pending_orders(api: oandapyV20.API, acc: str):
+    print(sys._getframe().f_code.co_name)
+
     r = orders.OrdersPending(accountID=acc)
     rv = api.request(r)
     print(json.dumps(rv, indent=2))
@@ -80,12 +99,16 @@ def print_pending_orders(api: oandapyV20.API, acc: str):
 
 # trade
 def print_trades(api: oandapyV20.API, acc: str):
+    print(sys._getframe().f_code.co_name)
+
     r = trades.TradesList(accountID=acc)
     rv = api.request(r)
     print(json.dumps(rv, indent=2))
 
 
 def print_opentrades(api: oandapyV20.API, acc: str):
+    print(sys._getframe().f_code.co_name)
+
     r = trades.OpenTrades(accountID=acc)
     rv = api.request(r)
     print(json.dumps(rv, indent=2))
@@ -93,12 +116,16 @@ def print_opentrades(api: oandapyV20.API, acc: str):
 
 # positions
 def print_positions(api: oandapyV20.API, acc: str):
+    print(sys._getframe().f_code.co_name)
+
     r = positions.PositionList(accountID=acc)
     rv = api.request(r)
     print(json.dumps(rv, indent=2))
 
 
 def print_open_positions(api: oandapyV20.API, acc: str):
+    print(sys._getframe().f_code.co_name)
+
     r = positions.OpenPositions(accountID=acc)
     rv = api.request(r)
     print(json.dumps(rv, indent=2))
@@ -106,6 +133,8 @@ def print_open_positions(api: oandapyV20.API, acc: str):
 
 # transactions
 def print_transactions(api: oandapyV20.API, acc: str):
+    print(sys._getframe().f_code.co_name)
+
     r = transactions.TransactionList(accountID=acc)
     rv = api.request(r)
     print(json.dumps(rv, indent=2))
@@ -113,6 +142,8 @@ def print_transactions(api: oandapyV20.API, acc: str):
 
 # pricing
 def print_pricing(api: oandapyV20.API, acc: str):
+    print(sys._getframe().f_code.co_name)
+
     param = {
         'instruments': 'XAU_USD'
     }
@@ -123,6 +154,8 @@ def print_pricing(api: oandapyV20.API, acc: str):
 
 # forexlabs
 def print_autochartist(api: oandapyV20.API):
+    print(sys._getframe().f_code.co_name)
+
     param = {
         'instrument': 'XAU_USD'
     }
@@ -132,6 +165,8 @@ def print_autochartist(api: oandapyV20.API):
 
 
 def print_calendar(api: oandapyV20.API):
+    print(sys._getframe().f_code.co_name)
+
     param = {
         'instrument': 'XAU_USD',
         "period": 86400
@@ -142,6 +177,8 @@ def print_calendar(api: oandapyV20.API):
 
 
 def print_commitments_traders(api: oandapyV20.API):
+    print(sys._getframe().f_code.co_name)
+
     param = {
         'instrument': 'XAU_USD'
     }
@@ -151,6 +188,8 @@ def print_commitments_traders(api: oandapyV20.API):
 
 
 def print_historical_position_ratios(api: oandapyV20.API):
+    print(sys._getframe().f_code.co_name)
+
     # The v1 historical_position_ratios endpoint has been disabled.
     # Please use the v20-REST API to derive the position ratio values
     param = {
@@ -163,6 +202,8 @@ def print_historical_position_ratios(api: oandapyV20.API):
 
 
 def print_orderbook_data(api: oandapyV20.API):
+    print(sys._getframe().f_code.co_name)
+
     # The v1 orderbook_data endpoint has been disabled.
     # It has been replaced by the orderBook and positionBook endpoints in the v20-REST API.
     param = {
@@ -175,6 +216,8 @@ def print_orderbook_data(api: oandapyV20.API):
 
 
 def print_spreads(api: oandapyV20.API):
+    print(sys._getframe().f_code.co_name)
+
     param = {
         'instrument': 'XAU_USD',
         "period": 57600
