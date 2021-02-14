@@ -3,6 +3,14 @@
 
 import sys
 import json
+from datetime import datetime
+import arrow
+from arrow import Arrow
+
+import requests_cache
+
+requests_cache.install_cache('demo_cache')
+
 import oandapyV20
 import oandapyV20.endpoints.accounts as accounts
 import oandapyV20.endpoints.instruments as instruments
@@ -52,16 +60,56 @@ def print_accounts(api: oandapyV20.API):
 
 
 # instrument
+datetime_format = 'YYYY-MM-DDTHH:mm:ss'
+
+
 def print_candles(api: oandapyV20.API):
     print(sys._getframe().f_code.co_name)
 
+    from_date = arrow.get('2006-03-19T20:20:00.000000000Z')
+    rv = _download_candles(api, from_date, includeFirst=True)
+    print(json.dumps(rv, indent=2))
+
+
+def _download_candles(api: oandapyV20.API, from_date: Arrow, includeFirst: bool = True):
+    # download candles
     param = {
-        'granularity': 'M1',
-        'count': 6
+        'granularity': 'M10',
+        'count': 5,
+        'from': from_date.format(datetime_format) + 'Z',
+        'includeFirst': includeFirst
     }
     r = instruments.InstrumentsCandles('XAU_USD', params=param)
     rv = api.request(r)
+    return rv
+
+
+def print_candles_to_date(api: oandapyV20.API):
+    print(sys._getframe().f_code.co_name)
+
+    from_date = arrow.get('2000-01-01 00:00:00Z')
+    to_date = arrow.get('2006-04-01 00:00:00Z')
+    rv = _download_candles_to_date(api, from_date, to_date)
     print(json.dumps(rv, indent=2))
+
+
+def _download_candles_to_date(api: oandapyV20.API, from_date: Arrow, to_date: Arrow):
+    # download candles
+    first_round = True
+    includeFirst: bool = True
+    result = None
+    while to_date > from_date:
+        rv = _download_candles(api, from_date, includeFirst)
+
+        from_date = arrow.get(rv['candles'][-1]['time'])
+        if includeFirst:
+            includeFirst = False
+        if first_round:
+            result = rv
+            first_round = False
+        else:
+            result['candles'].append(rv['candles'])
+    return result
 
 
 def print_orderbook(api: oandapyV20.API):
@@ -238,7 +286,8 @@ def main():
     # print_accounts(client)
 
     # instrument
-    print_candles(client)
+    # print_candles(client)
+    print_candles_to_date(client)
     # print_orderbook(client)
     # print_positionbook(client)
 
