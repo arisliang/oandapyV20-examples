@@ -96,7 +96,7 @@ def _download_candles_to_date(api: oandapyV20.API, from_date: Arrow, to_date: Ar
     # download candles
     first_round = True
     includeFirst: bool = True
-    result = None
+    result: [] = None
     while to_date > from_date:
         rv = _download_candles(api, from_date, includeFirst)
 
@@ -107,7 +107,7 @@ def _download_candles_to_date(api: oandapyV20.API, from_date: Arrow, to_date: Ar
             result = rv
             first_round = False
         else:
-            result['candles'].append(rv['candles'])
+            result['candles'].extend(rv['candles'])
     return result
 
 
